@@ -1,0 +1,22 @@
+import cv2
+import string
+import pytesseract
+import numpy as np
+from PIL import Image
+
+#importing library from device
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+img = cv2.imread("give your img location")
+
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+#remove noise
+kernel = np.ones((1,1), np.uint8)
+img = cv2.dilate(img, kernel, iterations=1)
+img = cv2.erode(img, kernel, iterations=1)
+#making it scanned version
+cv2.imwrite("img location to save",img)
+
+texts = pytesseract.image_to_string(img)
+print(texts)
